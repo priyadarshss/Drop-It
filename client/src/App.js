@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { uploadFile } from './services/api'
 import './App.css'
 
 function App() {
@@ -10,6 +11,19 @@ function App() {
   const onUploadClick = () => {
     fileInputRef.current.click()
   }
+
+  useEffect(() => {
+    const getImage = async() => {
+      if(file){
+        const data = new FormData();
+        data.append("name", file.name);
+        data.append("file", file);
+
+        const response = await uploadFile(data);
+      }
+    }
+  }, [file])
+  console.log(file)
 
   return (
     <div className='container'>
